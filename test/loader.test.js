@@ -4,7 +4,7 @@ import compiler from './compiler';
 
 // This is just making sure the test suite is working
 test('Returns an svg', async () => {
-  const stats = await compiler('example.tex');
+  const stats = await compiler('./res/tex/basic.tex');
   const output = stats.toJson({ source: true }).modules[0].source;
 
   // We're passing the output of our loader to @svgr/webpack
@@ -13,7 +13,7 @@ test('Returns an svg', async () => {
 
   // The last line in the output should export the created element
   // @svgr/webpack calls this element Svg${filename}
-  // So this below would be called SvgExample
+  // So this below would be called SvgBasic
   expect(output).toMatch(/export default Svg.*;$/);
 });
 
@@ -21,7 +21,7 @@ test('Throws an error if options.lang set incorrectly', async () => {
   // LISP is not one of the supported languages :(
   const lang = 'LISP';
 
-  return expect(compiler('example.tex', { lang }))
+  return expect(compiler('./res/tex/basic.tex', { lang }))
     .rejects
     .toThrow(`Unexpected value for options.lang: ${lang}`);
 });
@@ -32,7 +32,7 @@ describe('Control sequence behavior', () => {
     // which is the package which defines \perthousand
     const options = { lang: 'tex' };
 
-    const stats = await compiler('perthousand.tex', options);
+    const stats = await compiler('./res/tex/perthousand.tex', options);
     const output = stats.toJson({ source: true }).modules[0].source;
 
     expect(output).toMatch(/Undefined control sequence/);
@@ -43,7 +43,7 @@ describe('Control sequence behavior', () => {
     // which is where the \perthousand control sequence is defined
     const options = { lang: 'tex', packages: ['base', 'ams'] };
 
-    const stats = await compiler('perthousand.tex', options);
+    const stats = await compiler('./res/tex/perthousand.tex', options);
     const output = stats.toJson({ source: true }).modules[0].source;
 
     expect(output).toMatch(/Undefined control sequence/);
@@ -53,7 +53,7 @@ describe('Control sequence behavior', () => {
     // Includes gensymb, this is the package which defined \perthousand
     const options = { lang: 'tex', packages: ['base', 'ams', 'gensymb'] };
 
-    const stats = await compiler('perthousand.tex', options);
+    const stats = await compiler('./res/tex/perthousand.tex', options);
     const output = stats.toJson({ source: true }).modules[0].source;
 
     expect(output).not.toMatch(/Undefined control sequence/);
@@ -62,7 +62,7 @@ describe('Control sequence behavior', () => {
   test('Find control sequence using allPackages', async () => {
     const options = { lang: 'tex', allPackages: true };
 
-    const stats = await compiler('perthousand.tex', options);
+    const stats = await compiler('./res/tex/perthousand.tex', options);
     const output = stats.toJson({ source: true }).modules[0].source;
 
     // Checking for this in the output because allPackages includes noundefined
@@ -74,7 +74,7 @@ describe('Control sequence behavior', () => {
     test('Cannot find a control sequence which doesn\'t exist', async () => {
       const options = { lang: 'tex' };
 
-      const stats = await compiler('garbage.tex', options);
+      const stats = await compiler('./res/tex/garbage.tex', options);
       const output = stats.toJson({ source: true }).modules[0].source;
 
       expect(output).toMatch(/Undefined control sequence/);
@@ -86,7 +86,7 @@ describe('Control sequence behavior', () => {
     test('Error not thrown with noundefined', async () => {
       const options = { lang: 'tex', packages: ['base', 'noundefined'] };
 
-      const stats = await compiler('garbage.tex', options);
+      const stats = await compiler('./res/tex/garbage.tex', options);
       const output = stats.toJson({ source: true }).modules[0].source;
 
       expect(output).not.toMatch(/Undefined control sequence/);
