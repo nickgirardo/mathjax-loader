@@ -14,10 +14,13 @@ export default (fixture, options = {}) => {
       rules: [
         {
           test: /\.tex$/,
-          use: {
-            loader: path.resolve(__dirname, '../src/loader.js'),
-            options,
-          },
+          use: [
+            '@svgr/webpack',
+            {
+              loader: path.resolve(__dirname, '../src/loader.js'),
+              options,
+            },
+          ],
         },
       ],
     },
