@@ -26,8 +26,8 @@ test('Throws an error if options.lang set incorrectly', async () => {
     .toThrow(`Unexpected value for options.lang: ${lang}`);
 });
 
-describe('Control sequence behavior', () => {
-  test('Cannot find control sequence from package not imported', async () => {
+describe('Package behavior', () => {
+  test('Cannot find control sequence from outside of default packages', async () => {
     // Note that the default package list does not include gensymb
     // which is the package which defines \perthousand
     const options = { lang: 'tex' };
