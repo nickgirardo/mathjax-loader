@@ -1,0 +1,39 @@
+{
+  "name": "mathjax-loader",
+  "version": "0.1.0",
+  "description": "Webpack loader to transform tex and mathml files to svgs via mathjax",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickgirardo/mathjax-loader.git"
+  },
+  "keywords": [
+    "webpack",
+    "mathjax",
+    "tex",
+    "mathml"
+  ],
+  "author": "Nick Girardo <nickgirardo@gmail.com> (https://nickgirardo.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nickgirardo/mathjax-loader/issues"
+  },
+  "homepage": "https://github.com/nickgirardo/mathjax-loader#readme",
+  "dependencies": {
+    "loader-utils": "^2.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.4",
+    "@babel/preset-env": "^7.15.4",
+    "babel-jest": "^27.1.0",
+    "jest": "^27.1.0",
+    "memfs": "^3.2.4",
+    "webpack": "^5.51.2"
+  }
+}
