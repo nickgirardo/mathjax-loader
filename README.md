@@ -8,7 +8,9 @@ Usage
 
 To get started, install `mathjax-loader` 
 
-```npm install --save-dev mathjax-loader```
+```console
+npm install --save-dev mathjax-loader
+```
 
 `mathjax-loader` outputs as SVG files, it is therefore recommended to combine it with another loader such as [`@svgr/webpack`](https://www.npmjs.com/package/@svgr/webpack).
 
@@ -52,7 +54,7 @@ e^{i\theta{}} = \cos{\theta{}} + i\sin{\theta{}}
 ```
 
 **pythagoras.mml**
-```
+```xml
 <math>
   <mrow>
     <msup>
