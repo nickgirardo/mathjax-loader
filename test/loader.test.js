@@ -126,4 +126,16 @@ describe('Package behavior', () => {
       expect(console.warn).toHaveBeenCalledWith('Unable to find the package made_up_package');
     });
   });
+
+  test('MathJax errors stop compilation if exitOnError is set', async () => {
+      console.warn = jest.fn();
+
+      const options = { lang: 'tex', exitOnError: true };
+
+      const compile = compiler('./res/tex/perthousand.tex', options);
+
+      return expect(compile)
+        .rejects
+        .toThrow('MathJax: Undefined control sequence \\perthousand');
+  });
 });

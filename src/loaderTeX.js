@@ -12,6 +12,7 @@ const defaultOptions = {
   lang: 'TeX',
   packages: ['base', 'ams'],
   allPackages: false,
+  exitOnError: false,
 };
 
 
@@ -26,6 +27,11 @@ export function loadTeX(source, userOptions) {
 
     const error = `MathJax: ${text}`;
 
+    // Should we throw and stop the compilation on errors?
+    if (options.exitOnError)
+      throw new Error(error);
+
+    // If not, just warn the user
     console.warn(error);
   }
 
