@@ -128,8 +128,6 @@ describe('Package behavior', () => {
   });
 
   test('MathJax errors stop compilation if exitOnError is set', async () => {
-      console.warn = jest.fn();
-
       const options = { lang: 'tex', exitOnError: true };
 
       const compile = compiler('./res/tex/perthousand.tex', options);
@@ -137,5 +135,37 @@ describe('Package behavior', () => {
       return expect(compile)
         .rejects
         .toThrow('MathJax: Undefined control sequence \\perthousand');
+  });
+});
+
+
+describe('MathML', () => {
+  test('Renders basic MathML document to SVG', async () => {
+    const options = { lang: 'mathml' };
+
+    const stats = await compiler('./res/mathml/basic.mml', options);
+    const output = stats.toJson({ source: true }).modules[0].source;
+
+    // We're passing the output of our loader to @svgr/webpack
+    // We should expect this to create and return a React svg element
+    expect(output).toMatch(/React\.createElement\("svg"/);
+
+    // The svg should contain notes of the mathml that created it
+    expect(output).toMatch(/data-mml-node/);
+
+    // The last line in the output should export the created element
+    // @svgr/webpack calls this element Svg${filename}
+    // So this below would be called SvgBasic
+    expect(output).toMatch(/export default Svg.*;$/);
+  });
+
+  test('Throws on unrecognized tag', async () => {
+    const options = { lang: 'mathml' };
+
+    const compile = compiler('./res/mathml/badtag.mml', options);
+
+    return expect(compile)
+      .rejects
+      .toThrow('Unknown node type "badtag"');
   });
 });

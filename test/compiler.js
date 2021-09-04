@@ -22,6 +22,16 @@ export default (fixture, options = {}) => {
             },
           ],
         },
+        {
+          test: /\.mml$/,
+          use: [
+            '@svgr/webpack',
+            {
+              loader: path.resolve(__dirname, '../src/loader.js'),
+              options,
+            },
+          ],
+        },
       ],
     },
   });
