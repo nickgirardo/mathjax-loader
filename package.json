@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "description": "Webpack loader to transform tex and mathml files to svgs via mathjax",
   "scripts": {
-    "test": "jest --verbose"
+    "clean": "if [ -d \"dist\" ]; then rm -r \"dist\"; fi",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production babel src -d dist",
+    "test": "jest"
   },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/loader.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nickgirardo/mathjax-loader.git"
@@ -29,6 +36,7 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
+    "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.4",
     "@babel/preset-env": "^7.15.4",
     "@svgr/webpack": "^5.5.0",
