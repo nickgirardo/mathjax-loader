@@ -26,7 +26,7 @@ module.exports = {
               use: [
                 '@svgr/webpack',
                 {
-                  loader: path.resolve(__dirname, '../src/loader.js'),
+                  loader: 'mathjax-loader',
                   options: { lang: 'TeX' },
                 },
               ],
@@ -36,7 +36,7 @@ module.exports = {
               use: [
                 '@svgr/webpack',
                 {
-                  loader: path.resolve(__dirname, '../src/loader.js'),
+                  loader: 'mathjax-loader',
                   options: { lang: 'MathML' },
                 },
               ],
