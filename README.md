@@ -1,7 +1,7 @@
 mathjax-loader
 ==============
 
-Use [MathJax](https://mathjax.org/) to import TeX and MathML files as SVGs.
+Use [MathJax](https://mathjax.org/) to import TeX, MathML, and AsciiMath files as SVGs.
 
 Usage
 -----
@@ -41,6 +41,16 @@ module.exports = {
                 },
               ],
             },
+            {
+              test: /\.asciimath$/,
+              use: [
+                '@svgr/webpack',
+                {
+                  loader: 'mathjax-loader',
+                  options: { lang: 'AsciiMath' },
+                },
+              ],
+            },
         ],
     },
 };
@@ -75,17 +85,24 @@ e^{i\theta{}} = \cos{\theta{}} + i\sin{\theta{}}
 </math>
 ```
 
+**trig.asciimath**
+```
+sin^2 theta + cos^2 theta = 1
+```
+
 With this they can be included into a react document.  Note that `@svgr/webpack` is critical for this.
 
 **example.jsx**
 ```jsx
 import Euler from 'euler.tex';
 import Pythagoras from 'pythagoras.mml';
+import Trig from 'trig.asciimath';
 
 export default Example = () => (
   <>
     <div><Euler /></div>
     <div><Pythagoras /></div>
+    <div><Trig /></div>
   </>
 );
 ```
@@ -93,16 +110,16 @@ export default Example = () => (
 Options
 -------
 
-|  Name         |  Values             |  Default          |  Description                           |
-|---------------|---------------------|-------------------|----------------------------------------|
-| `lang`        | `"TeX"`, `"MathML"` | `TeX`             | Language of the input file             |
-| `packages`    | `Array<string>`     | `['base', 'ams']` | TeX only: which packages to use        |
-| `allPackages` | `boolean`           | `false`           | TeX only: should all packages be used  |
-| `exitOnError` | `boolean`           | `false`           | TeX only: exit if error in typesetting |
+|  Name         |  Values                            |  Default          |  Description                           |
+|---------------|------------------------------------|-------------------|----------------------------------------|
+| `lang`        | `"TeX"`, `"MathML"`, `"AsciiMath"` | `TeX`             | Language of the input file             |
+| `packages`    | `Array<string>`                    | `['base', 'ams']` | TeX only: which packages to use        |
+| `allPackages` | `boolean`                          | `false`           | TeX only: should all packages be used  |
+| `exitOnError` | `boolean`                          | `false`           | TeX only: exit if error in typesetting |
 
 ### lang
 
-This loader can handle TeX and MathML files.  The `lang` option sets which language should be used.  Case insensitive.
+This loader can handle TeX, MathML, and AsciiMath files.  The `lang` option sets which language should be used.  Case insensitive.
 
 ### packages
 
