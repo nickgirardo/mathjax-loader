@@ -1,7 +1,7 @@
 mathjax-loader
 ==============
 
-Use [MathJax](https://mathjax.org/) to import TeX and MathML files as SVGs.
+Use [MathJax](https://mathjax.org/) to import TeX, MathML, and AsciiMath files as SVGs.
 
 Usage
 -----
