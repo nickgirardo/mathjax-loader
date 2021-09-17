@@ -169,3 +169,24 @@ describe('MathML', () => {
       .toThrow('Unknown node type "badtag"');
   });
 });
+
+describe('AsciiMath', () => {
+  test('Renders basic AsciiMath document to SVG', async () => {
+    const options = { lang: 'asciimath' };
+
+    const stats = await compiler('./res/asciimath/basic.asciimath', options);
+    const output = stats.toJson({ source: true }).modules[0].source;
+
+    // We're passing the output of our loader to @svgr/webpack
+    // We should expect this to create and return a React svg element
+    expect(output).toMatch(/React\.createElement\("svg"/);
+
+    // The svg has data on the mml nodes which are used under the hood
+    expect(output).toMatch(/data-mml-node/);
+
+    // The last line in the output should export the created element
+    // @svgr/webpack calls this element Svg${filename}
+    // So this below would be called SvgBasic
+    expect(output).toMatch(/export default Svg.*;$/);
+  });
+});
